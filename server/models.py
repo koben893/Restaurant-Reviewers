@@ -7,17 +7,6 @@ from flask_restful import Api
 from config import db
 
 # Models go here!
-convention = {
-    "ix": "ix_%(column_0_label)s",
-    "uq": "uq_%(table_name)s_%(column_0_name)s",
-    "ck": "ck_%(table_name)s_%(constraint_name)s",
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    "pk": "pk_%(table_name)s"
-}
-
-metadata = MetaData(naming_convention=convention)
-
-db = SQLAlchemy(metadata=metadata)
 
 
 class Bar(db.Model, SerializerMixin):
@@ -64,9 +53,9 @@ class User(db.Model, SerializerMixin):
 
     @validates( 'age' )
     def validate_age( self, key, new_age ):
-        if 8 <= new_age <= 18:
+        if 21 <= new_age:
             return new_age
-        raise ValueError( 'that age got to be between 8 and 18!' )
+        raise ValueError( 'Must be older than 21' )
     
     
     def __repr__(self):
@@ -77,7 +66,7 @@ class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.String, nullable = False )
+    # date = db.Column(db.String, nullable = False )
     rating = db.Column(db.Integer)
 
     # Add relationships !!!!!

@@ -44,7 +44,6 @@ def create_reviews(bars, users):
     reviews = []
     for _ in range(20):
         r = Review(
-            time=rc(range(24)),
             user_id=rc([user.id for user in users]),
             bar_id=rc([bar.id for bar in bars]),
             rating=randint(1, 5)
