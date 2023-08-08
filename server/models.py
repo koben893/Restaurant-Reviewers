@@ -21,7 +21,7 @@ db = SQLAlchemy(metadata=metadata)
 
 
 class Bar(db.Model, SerializerMixin):
-    __tablename__ = 'bar'
+    __tablename__ = 'bars'
 
     # serialize_rules = ( '-reviews', '-user.reviews', )
 
@@ -32,15 +32,13 @@ class Bar(db.Model, SerializerMixin):
     # Add relationship
 
 
-    reviews = db.relationship( 'Review', back_populates = 'bar', 
-        cascade = 'all, delete-orphan' )
-
+    reviews = db.relationship( 'Review', back_populates = 'bar', cascade = 'all, delete-orphan' )
     users = association_proxy( 'reviews', 'user' )
 
     # Add serialization rules
     
     def __repr__(self):
-        return f'<Bar {self.id}: {self.name}>'
+        return f'<Bar id={self.id} name={self.name}>'
 
 
 class User(db.Model, SerializerMixin):
@@ -72,14 +70,14 @@ class User(db.Model, SerializerMixin):
     
     
     def __repr__(self):
-        return f'<user {self.id}: {self.name}>'
+        return f'<user id={self.id} name={self.name}>'
 
 
 class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
-    time = db.Column(db.Integer, nullable = False )
+    date = db.Column(db.String, nullable = False )
     rating = db.Column(db.Integer)
 
     # Add relationships !!!!!
@@ -87,17 +85,17 @@ class Review(db.Model, SerializerMixin):
     user_id = db.Column( db.Integer, db.ForeignKey( 'users.id' ) )
     bar_id = db.Column( db.Integer, db.ForeignKey( 'bars.id' ) )
 
-    user = db.relationship( 'user', back_populates = 'reviews' )
     bar = db.relationship( 'Bar', back_populates = 'reviews' )
+    user = db.relationship( 'User', back_populates = 'reviews' )
 
     # Add serialization rules
     
     # Add validation
-    @validates( 'time' )
-    def check_time( self, key, new_time ):
-        if 0 <= new_time < 24:
-            return new_time
-        raise ValueError( 'time must be during an earth day length' )
+    @validates ('rating')
+    def validates_rating(self,key,new_rating):
+        if 1 <= new_rating <=5:
+            return new_rating
+        raise ValueError ('Rating must be between 1 and 5')
 
 
     def __repr__(self):
