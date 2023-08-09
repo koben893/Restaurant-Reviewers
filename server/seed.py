@@ -33,8 +33,11 @@ def create_users():
     for _ in range(5):
         u = User(
             name=fake.name(),
-            age=rc(range(21, 99))
+            email= fake.email(),
+            username= fake.user_name(),
+
         )
+        u.password_hash = fake.password()
         users.append(u)
 
     return users

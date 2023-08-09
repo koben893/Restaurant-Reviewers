@@ -5,14 +5,18 @@
 # Remote library imports
 
 # Local imports
-from config import app, db, api
+from config import app, db, api, bcrypt
 # Add your model imports
 from models import Restaurant, User, Review
 from flask_restful import Resource
-from flask import make_response, jsonify, request
+from flask import make_response, jsonify, request, session
 import os
 
 # Views go here!
+
+@app.route('/')
+def index():
+    return '<h1>Phase 4 Project Server</h1>'
 
 class Restaurants (Resource):
     def get(self):
@@ -44,7 +48,24 @@ class Users (Resource):
     def get (self):
         users = User.query.all()
         users_dict_list = [user._to_dict_(rules = ('reviews',)) for user in users]
-        return make_response(users_dict_list)
+        if len(users) == 0:
+            return make_response({'error': 'no Users'}, 404)
+        return make_response(users_dict_list,200)
+    
+    def post (self):
+        data = request.get_json()
+        newUser = User(
+            email = data['email'],
+            username= data["username"],
+            password = data["password"],
+            )
+        try:
+            db.session.add(newUser)
+            db.session.commit()
+            return make_response (newUser.to_dict(), 200)
+        except Exception as e:
+            db.session.rollback()
+            return make_response({'error': f'{repr(e)}'}, 422)
     
 api.add_resource(Users, '/users')
 
@@ -70,9 +91,46 @@ api.add_resource(Reviews, '/reviews')
 
 
 
-@app.route('/')
-def index():
-    return '<h1>Phase 4 Project Server</h1>'
+
+
+class Login(Resource):
+    def post(self):
+        request_json = request.get_json()
+
+        username = request_json.get("username")
+        password = request_json.get("password")
+
+        user = User.query.filter_by(username = username).first()
+        
+
+        if user:
+            if user.authenticate(password):
+                print(user.id)
+                session['user_id'] = user.id
+                return user.to_dict(), 200
+        else:
+            return {'error': 'Invalid Credentials'}, 401
+        
+api.add_resource(Login, '/login')
+
+class Logout(Resource):
+    def delete(self):
+        
+        if session.get('user_id'):
+            
+            session['user_id'] = None
+            
+            return {}, 204
+        
+        return {'error': '401 Unauthorized'}, 401
+    
+api.add_resource(Logout, '/logout')
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
