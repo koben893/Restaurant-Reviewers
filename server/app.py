@@ -7,38 +7,38 @@
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import Bar, User, Review
+from models import Restaurant, User, Review
 from flask_restful import Resource
 from flask import make_response, jsonify, request
 import os
 
 # Views go here!
 
-class Bars (Resource):
+class Restaurants (Resource):
     def get(self):
-        bars = Bar.query.all()
-        bars_dict_list = [bar.to_dict( rules= ('-reviews',)) for bar in bars]
-        return make_response (bars_dict_list)
+        restaurants = Restaurant.query.all()
+        restaurants_dict_list = [restaurant.to_dict( rules= ('-reviews',)) for restaurant in restaurants]
+        return make_response (restaurants_dict_list)
     
-api.add_resource (Bars, '/bars')
+api.add_resource (Restaurants, '/restaurants')
 
-class BarByID(Resource):
+class RestaurantByID(Resource):
     def get(self,id):
-        bar = Bar.query.filter_by(id=id).first()
-        if not bar:
-            return make_response({"error": "Bar not found"}, 404)
-        return make_response(bar.to_dict())
+        restaurant = Restaurant.query.filter_by(id=id).first()
+        if not restaurant:
+            return make_response({"error": "Restaurant not found"}, 404)
+        return make_response(restaurant.to_dict())
     
     def delete (self, id):
-        bar = Bar.query.filter_by_id(id=id).first()
-        if not bar:
-            return make_response ({"error": "Bar not found"},404)
+        restaurant = Restaurant.query.filter_by_id(id=id).first()
+        if not restaurant:
+            return make_response ({"error": "Restaurant not found"},404)
         
-        db.session.delete(bar)
+        db.session.delete(restaurant)
         db.session.commit()
         return make_response ("", 204)
     
-api.add_resource(BarByID, '/bars/<int:id>')
+api.add_resource(RestaurantByID, '/restaurants/<int:id>')
 
 class Users (Resource):
     def get (self):
@@ -54,7 +54,7 @@ class Reviews (Resource):
         try:
             review = Review(
                 rating = data['rating'],
-                bar_id = data ['bar_id'],
+                restaurant_id = data ['restaurant_id'],
                 user_id = data ['user_id']
             )
         except ValueError as value_error:

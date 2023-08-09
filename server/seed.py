@@ -3,29 +3,29 @@ from random import randint, choice as rc
 from faker import Faker
 
 from app import app
-from models import db, Bar, Review, User
+from models import db, Restaurant, Review, User
 
 fake = Faker()
 
 
 def clear_database():
     with app.app_context():
-        Bar.query.delete()
+        Restaurant.query.delete()
         User.query.delete()
         Review.query.delete()
         db.session.commit()
 
 
-def create_bars():
+def create_restaurants():
     with app.app_context():
-        bars = []
+        restaurants = []
         for _ in range(10):
-         b = Bar(
+         b = Restaurant(
             name=fake.sentence(),
         )
-        bars.append(b)
+        restaurants.append(b)
 
-    return bars
+    return restaurants
 
 
 def create_users():
@@ -40,12 +40,12 @@ def create_users():
     return users
 
 
-def create_reviews(bars, users):
+def create_reviews(restaurants, users):
     reviews = []
     for _ in range(20):
         r = Review(
             user_id=rc([user.id for user in users]),
-            bar_id=rc([bar.id for bar in bars]),
+            restaurant_id=rc([restaurant.id for restaurant in restaurants]),
             rating=randint(1, 5)
         )
         reviews.append(r)
@@ -57,13 +57,13 @@ if __name__ == '__main__':
 
     with app.app_context():
         print("Clearing db...")
-        Bar.query.delete()
+        Restaurant.query.delete()
         Review.query.delete()
         User.query.delete()
 
-        print("Seeding bars...")
-        bars = create_bars()
-        db.session.add_all(bars)
+        print("Seeding restaurants...")
+        restaurants = create_restaurants()
+        db.session.add_all(restaurants)
         db.session.commit()
 
         print("Seeding users...")
@@ -72,7 +72,7 @@ if __name__ == '__main__':
         db.session.commit()
 
         print("Seeding reviews...")
-        reviews = create_reviews(bars, users)
+        reviews = create_reviews(restaurants, users)
         db.session.add_all(reviews)
         db.session.commit()
 
