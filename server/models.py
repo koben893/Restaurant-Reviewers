@@ -9,8 +9,8 @@ from config import db
 # Models go here!
 
 
-class Bar(db.Model, SerializerMixin):
-    __tablename__ = 'bars'
+class Restaurant(db.Model, SerializerMixin):
+    __tablename__ = 'restaurants'
 
     # serialize_rules = ( '-reviews', '-user.reviews', )
 
@@ -21,19 +21,19 @@ class Bar(db.Model, SerializerMixin):
     # Add relationship
 
 
-    reviews = db.relationship( 'Review', back_populates = 'bar', cascade = 'all, delete-orphan' )
+    reviews = db.relationship( 'Review', back_populates = 'restaurant', cascade = 'all, delete-orphan' )
     users = association_proxy( 'reviews', 'user' )
 
     # Add serialization rules
     
     def __repr__(self):
-        return f'<Bar id={self.id} name={self.name}>'
+        return f'<Restaurant id={self.id} name={self.name}>'
 
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     # Add serialization rules
-    #serialize_rules = ( '-reviews.user', '-reviews.bar.reviews' )
+    #serialize_rules = ( '-reviews.user', '-reviews.restaurant.reviews' )
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -42,20 +42,20 @@ class User(db.Model, SerializerMixin):
 
     # Add relationship
     reviews = db.relationship( 'Review', back_populates = 'user' )
-    bars = association_proxy( 'reviews', 'bar' )
+    restaurants = association_proxy( 'reviews', 'restaurant' )
     
     # Add validation
     @validates( 'name' )
     def validate_name( self, key, new_name ):
         if not new_name:
-            raise ValueError( 'got to have a name!' )
+            raise ValueError('must have a name!')
         return new_name
 
     @validates( 'age' )
     def validate_age( self, key, new_age ):
         if 21 <= new_age:
             return new_age
-        raise ValueError( 'Must be older than 21' )
+        raise ValueError('Must be older than 21')
     
     
     def __repr__(self):
@@ -69,12 +69,12 @@ class Review(db.Model, SerializerMixin):
     # date = db.Column(db.String, nullable = False )
     rating = db.Column(db.Integer)
 
-    # Add relationships !!!!!
+    # Add relationships 
 
     user_id = db.Column( db.Integer, db.ForeignKey( 'users.id' ) )
-    bar_id = db.Column( db.Integer, db.ForeignKey( 'bars.id' ) )
+    restaurant_id = db.Column( db.Integer, db.ForeignKey( 'restaurants.id' ) )
 
-    bar = db.relationship( 'Bar', back_populates = 'reviews' )
+    restaurant = db.relationship( 'Restaurant', back_populates = 'reviews' )
     user = db.relationship( 'User', back_populates = 'reviews' )
 
     # Add serialization rules
