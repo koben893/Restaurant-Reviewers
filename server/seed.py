@@ -19,22 +19,25 @@ def clear_database():
 def create_restaurants():
     with app.app_context():
         restaurants = []
-        for _ in range(10):
-         b = Restaurant(
-            name=fake.sentence(),
-        )
-        restaurants.append(b)
+        for _ in range(50):
+            b = Restaurant(
+                name=fake.sentence(),
+            )
+            restaurants.append(b)
 
     return restaurants
 
 
 def create_users():
     users = []
-    for _ in range(5):
+    for _ in range(20):
         u = User(
             name=fake.name(),
-            age=rc(range(21, 99))
+            email= fake.email(),
+            username= fake.user_name(),
+
         )
+        u.password_hash = fake.password()
         users.append(u)
 
     return users
