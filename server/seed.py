@@ -18,14 +18,21 @@ def clear_database():
 
 def create_restaurants():
     with app.app_context():
-        restaurants = []
-        for _ in range(50):
-            b = Restaurant(
-                name=fake.sentence(),
-            )
-            restaurants.append(b)
+        R1= Restaurant(name = 'Als Burger Joint')
+        R2= Restaurant(name = 'Connies Drive Through')
+        R3= Restaurant(name = 'Hole in the Wall')
+        R4= Restaurant(name = 'Bella Sera')
+        R5= Restaurant(name = 'Mario and Luigi')
+        R6= Restaurant(name = 'Mamma Mias')
+        R7= Restaurant(name = 'Jeffs Pancake House')
+        R8= Restaurant(name = 'MCdonalds Waffles')
+        R9= Restaurant(name = 'The V Cafe')
+        R10= Restaurant(name = 'Bobs Gator Shack')
 
-    return restaurants
+        allrestaurants = [R1, R2, R3, R4, R5, R6, R7, R8, R9, R10]
+
+
+        return allrestaurants
 
 
 def create_users():
