@@ -7,7 +7,7 @@
 # Local imports
 from config import app, db, api, bcrypt
 # Add your model imports
-from models import Restaurant, User, Review
+from models import Restaurant, User, Rating
 from flask_restful import Resource
 from flask import make_response, jsonify, request, session
 import os
@@ -21,7 +21,7 @@ def index():
 class Restaurants (Resource):
     def get(self):
         restaurants = Restaurant.query.all()
-        restaurants_dict_list = [restaurant.to_dict( rules= ('-reviews',)) for restaurant in restaurants]
+        restaurants_dict_list = [restaurant.to_dict( rules= ('-ratings',)) for restaurant in restaurants]
         return make_response (restaurants_dict_list)
     
 api.add_resource (Restaurants, '/restaurants')
@@ -47,7 +47,7 @@ api.add_resource(RestaurantByID, '/restaurants/<int:id>')
 class Users (Resource):
     def get (self):
         users = User.query.all()
-        users_dict_list = [user._to_dict_(rules = ('reviews',)) for user in users]
+        users_dict_list = [user._to_dict_(rules = ('ratings',)) for user in users]
         if len(users) == 0:
             return make_response({'error': 'no Users'}, 404)
         return make_response(users_dict_list,200)
@@ -69,11 +69,11 @@ class Users (Resource):
     
 api.add_resource(Users, '/users')
 
-class Reviews (Resource):
+class Ratings (Resource):
     def post (self):
         data = request.get_json()
         try:
-            review = Review(
+            rating = Rating(
                 rating = data['rating'],
                 restaurant_id = data ['restaurant_id'],
                 user_id = data ['user_id']
@@ -81,12 +81,12 @@ class Reviews (Resource):
         except ValueError as value_error:
             return make_response({"errors": [str(value_error)]}, 422)
         
-        db.session.add(review)
+        db.session.add(rating)
         db.session.commit()
 
-        return make_response(review.to_dict(),201)
+        return make_response(rating.to_dict(),201)
 
-api.add_resource(Reviews, '/reviews')
+api.add_resource(Ratings, '/ratings')
 
 
 
