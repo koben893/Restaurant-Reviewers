@@ -22,8 +22,8 @@ class Restaurant(db.Model, SerializerMixin):
     # Add relationship
 
 
-    reviews = db.relationship( 'Review', back_populates = 'restaurant', cascade = 'all, delete-orphan' )
-    users = association_proxy( 'reviews', 'user' )
+    ratings = db.relationship( 'Rating', back_populates = 'restaurant', cascade = 'all, delete-orphan' )
+    users = association_proxy( 'ratings', 'user' )
 
     # Add serialization rules
     
@@ -44,8 +44,8 @@ class User(db.Model, SerializerMixin):
     
 
     # Add relationship
-    reviews = db.relationship( 'Review', back_populates = 'user' )
-    restaurants = association_proxy( 'reviews', 'restaurant' )
+    ratings = db.relationship( 'Rating', back_populates = 'user' )
+    restaurants = association_proxy( 'ratings', 'restaurant' )
     
     # Add validation
     @validates( 'name' )
@@ -80,8 +80,8 @@ class User(db.Model, SerializerMixin):
             self._password_hash, password.encode('utf-8'))
 
 
-class Review(db.Model, SerializerMixin):
-    __tablename__ = 'reviews'
+class Rating(db.Model, SerializerMixin):
+    __tablename__ = 'ratings'
 
     id = db.Column(db.Integer, primary_key=True)
     # date = db.Column(db.String, nullable = False )
@@ -92,8 +92,8 @@ class Review(db.Model, SerializerMixin):
     user_id = db.Column( db.Integer, db.ForeignKey( 'users.id' ) )
     restaurant_id = db.Column( db.Integer, db.ForeignKey( 'restaurants.id' ) )
 
-    restaurant = db.relationship( 'Restaurant', back_populates = 'reviews' )
-    user = db.relationship( 'User', back_populates = 'reviews' )
+    restaurant = db.relationship( 'Restaurant', back_populates = 'ratings' )
+    user = db.relationship( 'User', back_populates = 'ratings' )
 
     # Add serialization rules
     
@@ -106,4 +106,4 @@ class Review(db.Model, SerializerMixin):
 
 
     def __repr__(self):
-        return f'<Review {self.id}>'
+        return f'<Rating {self.id}>'
