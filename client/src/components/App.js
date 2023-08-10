@@ -1,7 +1,6 @@
 import React from 'react';
 import '../App.css';
 import Header from "./Header"
-// import PageContainer from "./PageContainer"
 import '../darkMode.css';
 
 
@@ -13,7 +12,6 @@ function App() {
         <Header />
         <h1>test</h1>
       </header>
-      {/* <PageContainer /> */}
     </div>
   );
 }
