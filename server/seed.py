@@ -3,7 +3,7 @@ from random import randint, choice as rc
 from faker import Faker
 
 from app import app
-from models import db, Restaurant, Review, User
+from models import db, Restaurant, Rating, User
 
 fake = Faker()
 
@@ -12,7 +12,7 @@ def clear_database():
     with app.app_context():
         Restaurant.query.delete()
         User.query.delete()
-        Review.query.delete()
+        Rating.query.delete()
         db.session.commit()
 
 
@@ -50,17 +50,17 @@ def create_users():
     return users
 
 
-def create_reviews(restaurants, users):
-    reviews = []
+def create_ratings(restaurants, users):
+    ratings = []
     for _ in range(20):
-        r = Review(
+        r = Rating(
             user_id=rc([user.id for user in users]),
             restaurant_id=rc([restaurant.id for restaurant in restaurants]),
             rating=randint(1, 5)
         )
-        reviews.append(r)
+        ratings.append(r)
 
-    return reviews
+    return ratings
 
 
 if __name__ == '__main__':
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     with app.app_context():
         print("Clearing db...")
         Restaurant.query.delete()
-        Review.query.delete()
+        Rating.query.delete()
         User.query.delete()
 
         print("Seeding restaurants...")
@@ -81,9 +81,9 @@ if __name__ == '__main__':
         db.session.add_all(users)
         db.session.commit()
 
-        print("Seeding reviews...")
-        reviews = create_reviews(restaurants, users)
-        db.session.add_all(reviews)
+        print("Seeding ratings...")
+        ratings = create_ratings(restaurants, users)
+        db.session.add_all(ratings)
         db.session.commit()
 
         print("Done seeding!")

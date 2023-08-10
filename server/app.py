@@ -7,7 +7,7 @@
 # Local imports
 from config import app, db, api, bcrypt
 # Add your model imports
-from models import Restaurant, User, Review, Ratings
+from models import Restaurant, User, Rating
 from flask_restful import Resource
 from flask import make_response, jsonify, request, session
 import os
