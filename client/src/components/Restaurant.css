@@ -14,11 +14,12 @@
   
   
   .grid-container{
-    margin-left: 600px;
-    display: inline-grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: auto;
-    grid-gap: 1rem;
+    margin-left: 300px;
+    margin-right: 300px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    justify-items: center;
   }
 
   
