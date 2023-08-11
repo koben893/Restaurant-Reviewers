@@ -96,6 +96,7 @@ class Rating(db.Model, SerializerMixin):
     user = db.relationship( 'User', back_populates = 'ratings' )
 
     # Add serialization rules
+    serialize_rules =('-user.ratings')
     
     # Add validation
     @validates ('rating')
