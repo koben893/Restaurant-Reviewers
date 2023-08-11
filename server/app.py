@@ -7,7 +7,7 @@
 # Local imports
 from config import app, db, api, bcrypt
 # Add your model imports
-from models import Restaurant, User, Rating
+from models import Restaurant, User, Rating, Review
 from flask_restful import Resource
 from flask import make_response, jsonify, request, session
 import os
@@ -89,7 +89,13 @@ class Ratings (Resource):
 api.add_resource(Ratings, '/ratings')
 
 
-
+class Reviews(Resource):
+    def get(self):
+        reviews = Review.query.all()
+        reviews_dict_list = [review.to_dict() for review in reviews]
+        return make_response (reviews_dict_list)
+    
+api.add_resource (Reviews, '/reviews')
 
 
 
