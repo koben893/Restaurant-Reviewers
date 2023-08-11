@@ -5,7 +5,7 @@ function Ratings({user, onLogin}) {
         const [ratings, setRatings] = useState([])
     
     useEffect(() => {
-        fetch('http://127.0.0.1:5557/reviews')
+        fetch('http://127.0.0.1:5557/ratings')
             .then((response) => response.json())
             .then((data) => setRatings(data));
     }, []);
