@@ -107,3 +107,19 @@ class Rating(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<Rating {self.id}>'
+
+
+class Review(db.Model, SerializerMixin):
+    __tablename__ = 'reviews'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    
+
+    # Add relationship
+
+
+    # Add serialization rules
+    
+    def __repr__(self):
+        return f'<Review id={self.id} name={self.name}>'
