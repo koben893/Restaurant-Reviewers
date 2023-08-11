@@ -46,6 +46,14 @@ function NavBar() {
       >
         Reviews
       </NavLink>
+      <NavLink
+        to="/ratings"
+        className="nav-buttons"
+        exact
+        style={linkStyles}
+      >
+        Ratings
+      </NavLink>
     </>
   );
 }
