@@ -69,22 +69,38 @@ class Users (Resource):
     
 api.add_resource(Users, '/users')
 
-class Ratings (Resource):
-    def post (self):
+class Ratings(Resource):
+    def get(self):
+        ratings_with_names = []
+        ratings = Rating.query.all()
+
+        for rating in ratings:
+            user = User.query.get(rating.user_id)
+            restaurant = Restaurant.query.get(rating.restaurant_id)
+            rating_data = {
+                "rating": rating.rating,
+                "user_name": user.username,
+                "restaurant_name": restaurant.name
+            }
+            ratings_with_names.append(rating_data)
+
+        return make_response(jsonify(ratings_with_names), 200)
+
+    def post(self):
         data = request.get_json()
         try:
             rating = Rating(
-                rating = data['rating'],
-                restaurant_id = data ['restaurant_id'],
-                user_id = data ['user_id']
+                rating=data['rating'],
+                restaurant_id=data['restaurant_id'],
+                user_id=data['user_id']
             )
         except ValueError as value_error:
             return make_response({"errors": [str(value_error)]}, 422)
-        
+
         db.session.add(rating)
         db.session.commit()
 
-        return make_response(rating.to_dict(),201)
+        return make_response(rating.to_dict(), 201)
 
 api.add_resource(Ratings, '/ratings')
 
