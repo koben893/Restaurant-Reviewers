@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Ratings from './Ratings'
 import Restaurants from "./Restaurants"
 import Reviews from './Reviews';
+import About from "./About"
 
 function PageContainer() {
     return (
@@ -18,9 +19,9 @@ function PageContainer() {
         <Route path="/reviews">
             <Reviews />
         </Route>
-        {/* <Route path="/">
-            <Home />
-        </Route> */}
+        <Route path="/about">
+            <About />
+        </Route>
         </Switch>
     </>
     );
