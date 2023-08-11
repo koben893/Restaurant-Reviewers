@@ -38,7 +38,6 @@ function NavBar() {
       >
         Restaurants
       </NavLink>
-
       <NavLink
         to="/reviews"
         className="nav-buttons"
