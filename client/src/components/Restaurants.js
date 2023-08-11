@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import './Restaurant.css';
+import NewRestaurantForm from './NewRestaurantForm'
 
 function Restaurants({user}) {
 
     const [restaurants, setRestaurants] = useState([])
+    const addRestaruantToState = NewRestaurantObj =>{
+        setRestaurants( [...restaurants, NewRestaurantObj])
+    }
     
     useEffect(() => {
         fetch('http://127.0.0.1:5557/restaurants')
@@ -13,6 +17,7 @@ function Restaurants({user}) {
     return (
         <div className="header">
             <h1 className="center">Top Rated Restaurants</h1>
+            <NewRestaurantForm addRestaurantToState={addRestaruantToState}/>
             <div className="grid-container">
                 {restaurants.map((restaurant) => (
                     <div key={restaurant.id} className="card">
