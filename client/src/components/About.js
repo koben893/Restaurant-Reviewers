@@ -1,15 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 
-function About(){
+import React from 'react'
+import "./About.css"
 
-
-return(
-    <div className="header">
-            <h1>About Page </h1>
+function About() {
+  return (
+    <div className = "About" >
+        <h1> A B O U T </h1>
+        <p>This application is a collaborative effort brought to fruition by Andrew, Syeda, and Jeff. As a platform meticulously curated by our team, this website serves as a conduit to present a selection of our preferred dining establishments, complemented by the collective sentiments of fellow patrons. Through our inclusion of ratings and reviews, we have endeavored to furnish an insightful resource that streamlines the often-intricate process of selecting a restaurant. Our vision revolves around simplifying this decision-making journey and offering a comprehensive repository of culinary experiences.</p>
+        <p>At its core, this platform embodies the principles of democratizing dining experiences. The meticulously selected collection of preferred dining establishments is a testament to the discerning palates that shape this application's identity. These culinary gems, handpicked by our team, encapsulate a world of flavors and cultures, inviting users on a journey through the gastronomic tapestry we have woven.</p>
+        <p>However, this platform is more than a mere directory of eateries; it's a dynamic narrative curated by patrons. Through the thoughtful integration of ratings and reviews, we have designed an ecosystem that is as informative as it is engaging. The application doesn't just showcase dining establishments; it transforms them into stories told through the words and experiences of fellow enthusiasts. This immersion into the collective narrative enriches the process of selecting a restaurant, rendering it not just a functional decision but an experiential journey.</p>
+        <p>The cornerstone of our vision lies in simplifying the labyrinthine journey of choosing a restaurant. The complexities that often surround this decision-making process can be overwhelming, and that's precisely what we intend to alleviate. By providing a comprehensive repository of culinary experiences, complete with authentic user feedback, we aim to empower users with a tool that elevates the dining selection process to one of informed delight.</p>
+        <p>The user journey commences at the login page, a portal to a world of culinary exploration. The act of logging in sets the stage for personalized engagement, inviting users to partake in a range of interactive functionalities. Chief among these is the ability to 'favorite' restaurants directly from the restaurants page. This individualized curation empowers users to mark their preferred dining establishments, imbuing the process of selection with a personalized touch.</p>
+        <p>The restaurants page, the heart of the application, hosts an array of diverse culinary destinations representing various global cuisines. This curated ensemble serves as an homage to our collective epicurean inclinations. Here, culinary enthusiasts find themselves enveloped in a mosaic of flavors, each restaurant offering a distinct chapter in the narrative of the application. </p>
+        <p>However, the narrative doesn't end with a mere listing of establishments. It deepens with each user's engagement. Through a meticulously designed integration of ratings and reviews, we introduce a multi-dimensional perspective. These reviews, crafted with an authenticity that only patrons can provide, breathe life into the dining experiences, transcending numerical evaluations and delving into the realms of personal encounters.</p>
+        <p>A notable addition to the application is the 'dark mode' functionality. Recognizing the diversity in user preferences, this feature offers an adaptive aesthetic choice. Those who favor a more subdued ambiance are granted a visual environment that aligns with their sensory inclinations. This attention to detail underscores our commitment to enhancing user experience while accommodating individual preferences.</p>
+        <p>As we gaze into the horizon of innovation, our aspirations extend beyond the current feature set. The forthcoming addition of user-generated reviews will usher in a new era of engagement. This user-centric facet will foster an interactive ecosystem where firsthand experiences converge to shape a dynamic repository of narratives.</p>
+        <p>Moreover, we are poised to embrace the geographical context in our quest for innovation. The incorporation of location-based search functionalities is in the pipeline, elevating the platform's capabilities. This feature, a fusion of technological prowess and user-centric design, will empower users to unearth culinary treasures nestled within their immediate surroundings.</p>
+        <p>Looking further ahead, the application's trajectory is underscored by its evolution into a predictive culinary companion. By leveraging the power of algorithms, we intend to introduce restaurant recommendations based on user preferences. This anticipatory feature is designed to transform dining selection into a serendipitous journey of exploration.</p>
+        <p>In conclusion, this application epitomizes a harmonious fusion of culinary passion and technological innovation. It resonates as a tribute to the art of dining, encapsulating the essence of shared experiences and the transformative power of community-driven narratives. As we forge ahead on this journey, we remain dedicated to expanding the horizons of culinary exploration and offering a dynamic platform that redefines the manner in which we engage with the realm of food.</p>
     </div>
-)
-
+  )
 }
 
-export default About;
+export default About
+

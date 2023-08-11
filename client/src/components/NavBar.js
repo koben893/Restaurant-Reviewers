@@ -24,11 +24,11 @@ function NavBar() {
       </NavLink>
       <NavLink
         className="nav-buttons"
-        to="/login"
+        to="/about"
         exact
         style={linkStyles}
       >
-        Login
+        About
       </NavLink>
       <NavLink
         className="nav-buttons"
@@ -38,7 +38,6 @@ function NavBar() {
       >
         Restaurants
       </NavLink>
-
       <NavLink
         to="/reviews"
         className="nav-buttons"
