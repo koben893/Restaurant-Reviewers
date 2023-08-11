@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import homepage from './homepage.css'
+// import homepage from './homepage.css'
 import Ratings from './Ratings'
 
 function HomePage({user, onLogin}) {
